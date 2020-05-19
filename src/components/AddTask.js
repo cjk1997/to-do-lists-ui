@@ -12,10 +12,9 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Grid from '@material-ui/core/Grid';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
+    TimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
@@ -46,7 +45,8 @@ export function AddTask({ selectedList, getLists }) {
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(false);
     const [newTask, setNewTask] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [newTaskTitle, setNewTaskTitle] = useState('');
+    const [selectedDate, setSelectedDate] = useState('');
 
     const handleOpen = () => {
         setOpen(true);
@@ -56,9 +56,9 @@ export function AddTask({ selectedList, getLists }) {
         setOpen(false);
     };
 
-    const handleChange = (event) => {
+    const handleTaskChange = (event) => {
         event.preventDefault();
-        setNewTask({ 'task': event.target.value, 'archived': false, 'date': selectedDate });
+        setNewTaskTitle(event.target.value);
     };
 
     const handleDateChange = (date) => {
@@ -69,10 +69,19 @@ export function AddTask({ selectedList, getLists }) {
         };
     };
 
+    const createTask = (selectedList, getLists, handleClose) => {
+        const createdTask = { 'task': newTaskTitle, 'archived': false, 'date': selectedDate }
+        setNewTask(createdTask);
+        setSelectedDate('');
+        handleAddTask(createdTask, selectedList, getLists, handleClose)
+    };
+
+
+
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <form>
-                <TextField id="outlined-basic" label="List Item" placeholder="List Item" variant="outlined" onChange={handleChange}/>
+                <TextField id="outlined-basic" label="List Item" placeholder="List Item" variant="outlined" onChange={handleTaskChange}/>
                 <ExpansionPanel>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -83,33 +92,24 @@ export function AddTask({ selectedList, getLists }) {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container justify="space-around">
-                                <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label="Date picker dialog"
-                                    format="MM/dd/yyyy"
-                                    defaultValue={selectedDate}
-                                    onChange={handleDateChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                                <KeyboardTimePicker
-                                    margin="normal"
-                                    id="time-picker"
-                                    label="Time picker"
-                                    defaultValue={selectedDate}
-                                    onChange={handleDateChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change time',
-                                    }}
-                                />
-                            </Grid>
+                            <KeyboardDatePicker
+                                clearable
+                                value={selectedDate}
+                                onChange={date => handleDateChange(date)}
+                                minDate={new Date()}
+                                format="MM/dd/yyyy"
+                            />
+                            <TimePicker
+                                clearable
+                                showTodayButton
+                                todayLabel="now"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                            />
                         </MuiPickersUtilsProvider>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-                <Button className="submitButton" variant="contained" color="primary" onClick={() => handleAddTask(newTask, selectedList, getLists, handleClose)}>
+                <Button className="submitButton" variant="contained" color="primary" onClick={() => createTask(selectedList, getLists, handleClose)}>
                     Save
                 </Button>
             </form>
