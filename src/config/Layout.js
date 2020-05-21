@@ -164,6 +164,18 @@ export default function Layout({ children }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
+
+
+
+
+                    {/* <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Button size="large" variant="contained" color="primary" class="homeButton">
+                            Lists
+                        </Button>
+                    </Link> */}
+                        
+                        
+                        
                         Lists
                     </Typography>
                 </Toolbar>
@@ -187,6 +199,11 @@ export default function Layout({ children }) {
                 </div>
                 <Divider />
                 <div className="drawerListLinks">
+                    <Link to='/calendar' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Button className="calendarButton" variant="contained" color="primary">
+                            Calendar
+                        </Button>
+                    </Link>
                     {displayLists}
                 </div>
             </Drawer>
