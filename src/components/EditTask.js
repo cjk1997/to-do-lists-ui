@@ -50,21 +50,25 @@ const useStyles = makeStyles((theme) => ({
 
 export function EditTask({ task, index, editOpen, onClose, selectedList, getLists }) {
     const [editedTask, setEditedTask] = useState({});
-    const [selectedDate, setSelectedDate] = useState(task.date)
+    const [taskTitle, setTaskTitle] = useState('');
+    const [selectedDate, setSelectedDate] = useState(task.date);
     const classes = useStyles();
     
     const handleClose = () => {
         onClose();
     };
 
-    const handleEdit= (index, editedTask, selectedList, getLists) => {
+    const handleEdit = (index, selectedList, getLists) => {
         onClose();
-        HandleListItemEdit(index, editedTask, selectedList, getLists);
+        const tempTask = { 'task': taskTitle, 'archived': task.archived, 'date': selectedDate }
+        setEditedTask(tempTask)
+        HandleListItemEdit(index, tempTask, selectedList, getLists);
     };
 
     const handleChange = (event) => {
+        console.log("taskTitle", taskTitle)
         event.preventDefault();
-        setEditedTask({ 'task': event.target.value, 'archived': task.archived, 'date': selectedDate })
+        setTaskTitle(event.target.value);
     };
 
     const handleDateChange = (date) => {
@@ -72,6 +76,7 @@ export function EditTask({ task, index, editOpen, onClose, selectedList, getList
             setSelectedDate('')
         } else {
             setSelectedDate(date); 
+            console.log("date change", date)
         };
     };
 
@@ -105,7 +110,7 @@ export function EditTask({ task, index, editOpen, onClose, selectedList, getList
                         />
                     </Grid>
                 </MuiPickersUtilsProvider>
-                <Button className="submitButton" variant="contained" color="primary" onClick={() => handleEdit(index, editedTask, selectedList, getLists)}>
+                <Button className="submitButton" variant="contained" color="primary" onClick={() => handleEdit(index, selectedList, getLists)}>
                     Save
                 </Button>
             </form>
