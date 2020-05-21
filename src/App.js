@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ListsDisplay } from './pages/Home';
 import { CalendarDisplay } from './pages/CalendarPage';
 import { GenerateList } from './pages/ListPage';
+import { GenerateDailyList} from './pages/DatePage';
 import { ListsContext } from './context/ListsContext';
 import './App.css';
 
@@ -10,6 +11,7 @@ function App() {
   const { Provider } = ListsContext;
   const [lists, setLists] = useState([]);
   const [selectedList, setSelectedList] = useState({tasks: []});
+  const [selectedDate, setSelectedDate] = useState({});
   const getLists = () => {
     const url = process.env.REACT_APP_API_URL;
     fetch(`${url}`)
@@ -26,12 +28,13 @@ function App() {
   useEffect(() => {getLists()}, []);
 
   return (
-    <Provider value={{ lists, getLists, selectedList, setSelectedList }}>
+    <Provider value={{ lists, getLists, selectedList, setSelectedList, selectedDate, setSelectedDate }}>
       <Router>
         <Switch>
           <Route exact path='/' component={ListsDisplay} />
           <Route exact path='/calendar' component={CalendarDisplay} />
           <Route exact path='/list' component={GenerateList} />
+          <Route exact path='/date' component={GenerateDailyList} />
         </Switch>
       </Router>
     </Provider>
