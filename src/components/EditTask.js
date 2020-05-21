@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function EditTask({ task, index, editOpen, onClose, selectedList, getLists }) {
-    const [editedTask, setEditedTask] = useState({});
+    // const [editedTask, setEditedTask] = useState({});
     const [taskTitle, setTaskTitle] = useState('');
     const [selectedDate, setSelectedDate] = useState(task.date);
     const classes = useStyles();
@@ -61,7 +61,7 @@ export function EditTask({ task, index, editOpen, onClose, selectedList, getList
     const handleEdit = (index, selectedList, getLists) => {
         onClose();
         const tempTask = { 'task': taskTitle, 'archived': task.archived, 'date': selectedDate }
-        setEditedTask(tempTask)
+        // setEditedTask(tempTask)
         HandleListItemEdit(index, tempTask, selectedList, getLists);
     };
 
