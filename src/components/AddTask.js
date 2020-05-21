@@ -70,13 +70,11 @@ export function AddTask({ selectedList, getLists }) {
     };
 
     const createTask = (selectedList, getLists, handleClose) => {
-        const createdTask = { 'task': newTaskTitle, 'archived': false, 'date': selectedDate }
+        const createdTask = { 'task': newTaskTitle, 'archived': false, 'date': selectedDate };
         setNewTask(createdTask);
         setSelectedDate('');
-        handleAddTask(createdTask, selectedList, getLists, handleClose)
+        handleAddTask(createdTask, selectedList, getLists, handleClose);
     };
-
-
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
