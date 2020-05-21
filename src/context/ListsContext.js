@@ -5,4 +5,6 @@ export const ListsContext = React.createContext({
     getLists: () => {},
     selectedList: [],
     setSelectedList: () => {},
+    selectedDate: {},
+    setSelectedDate: () => {},
 });
