@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import 'date-fns';
 import date from 'date-and-time';
 import 'date-and-time/plugin/meridiem';
@@ -24,7 +25,18 @@ import EditIcon from '@material-ui/icons/Edit';
 
 export function GenerateList() {
     const { selectedList, getLists } = useContext(ListsContext);
+    const [redirectBool, setRedirectBool] = useState(false);
     date.plugin('meridiem');
+
+    console.log(selectedList)
+
+    const updateListSelectedBool = () => {
+        if (!selectedList._id) {
+            setRedirectBool(true);
+        };
+    };
+
+    useEffect(() => updateListSelectedBool(), []);
 
     const displayList = selectedList.tasks.map((task, index) => {
         let archived;
@@ -85,6 +97,7 @@ export function GenerateList() {
                     </TableContainer>
                     <AddTask selectedList={selectedList} getLists={getLists} />
                 </div>
+                {redirectBool ? <Redirect to="/" /> : ''}
             </Typography>
         </Layout>
     );
