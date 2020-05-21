@@ -43,6 +43,11 @@ export const ListsDisplay = () => {
     return(
         <Layout>
             <Typography component="div" gutterBottom>
+                <Link to='/calendar' style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Button className="calendarButton" variant="contained" color="primary">
+                        Calendar
+                    </Button>
+                </Link>
                 <div className="listButtonContainer">
                     {displayLists}
                 </div>
