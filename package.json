@@ -15,7 +15,7 @@
     "@testing-library/user-event": "^7.2.1",
     "clsx": "^1.1.0",
     "cors": "^2.8.5",
-    "date-and-time": "^0.13.1",
+    "date-and-time": "^0.14.2",
     "date-fns": "^2.14.0",
     "luxon": "^1.24.1",
     "moment": "^2.25.3",
